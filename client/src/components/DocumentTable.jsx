@@ -22,7 +22,9 @@ function DocumentTable() {
     fetchDocuments();
 
     socket.on("processingComplete", () => {
+
       fetchDocuments();
+
     });
 
   }, []);
@@ -31,8 +33,13 @@ function DocumentTable() {
     <div className="card">
 
       <div className="table-header">
+
         <h2>Uploaded Files</h2>
-        <span>{documents.length} Documents</span>
+
+        <span>
+          {documents.length} Documents
+        </span>
+
       </div>
 
       <div className="table-container">
@@ -40,11 +47,19 @@ function DocumentTable() {
         <table className="doc-table">
 
           <thead>
+
             <tr>
+
               <th>File Name</th>
+
               <th>Status</th>
+
               <th>Size</th>
+
+              <th>Uploaded At</th>
+
             </tr>
+
           </thead>
 
           <tbody>
@@ -58,6 +73,7 @@ function DocumentTable() {
                   <td>{doc.filename}</td>
 
                   <td>
+
                     <span
                       className={
                         doc.status === "Completed"
@@ -67,10 +83,29 @@ function DocumentTable() {
                     >
                       {doc.status}
                     </span>
+
                   </td>
 
                   <td>
-                    {(doc.filesize / 1024).toFixed(2)} KB
+
+                    {
+                      doc.filesize > 1024 * 1024
+
+                      ? (doc.filesize / (1024 * 1024)).toFixed(2) + " MB"
+
+                      : (doc.filesize / 1024).toFixed(2) + " KB"
+                    }
+
+                  </td>
+
+                  <td>
+
+                    {
+                      new Date(
+                        doc.uploaded_at
+                      ).toLocaleString()
+                    }
+
                   </td>
 
                 </tr>
@@ -80,12 +115,14 @@ function DocumentTable() {
             ) : (
 
               <tr>
+
                 <td
-                  colSpan="3"
+                  colSpan="4"
                   className="empty-state"
                 >
-                  No documents uploaded yet
+                  📄 No documents uploaded yet
                 </td>
+
               </tr>
 
             )}

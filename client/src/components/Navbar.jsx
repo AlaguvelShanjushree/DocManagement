@@ -5,7 +5,10 @@ function Navbar() {
 
       <div>
         <h1>Document Dashboard</h1>
-        <p>Manage and track company PDF documents</p>
+
+        <p>
+          Manage and track company PDF documents
+        </p>
       </div>
 
     </div>

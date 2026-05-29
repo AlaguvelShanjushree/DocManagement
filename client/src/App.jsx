@@ -36,6 +36,9 @@
 import Navbar from "./components/Navbar";
 import UploadBox from "./components/UploadBox";
 import DocumentTable from "./components/DocumentTable";
+import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
 function App() {
@@ -52,6 +55,10 @@ function App() {
         <DocumentTable />
 
       </div>
+
+      <Footer />
+
+      <ToastContainer />
 
     </div>
   );
