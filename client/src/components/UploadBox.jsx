@@ -3,78 +3,53 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 function UploadBox() {
-
   const [file, setFile] = useState(null);
-
   const [progress, setProgress] = useState(0);
-
   const [loading, setLoading] = useState(false);
 
   const uploadFile = async () => {
-
     if (!file) {
-
       toast.error("Please Select PDF");
-
       return;
     }
 
     const formData = new FormData();
-
     formData.append("pdf", file);
 
     try {
-
       setLoading(true);
+      setProgress(0);
 
-      await axios.post(
-        "http://localhost:5000/upload",
-        formData,
-        {
-          onUploadProgress: (progressEvent) => {
-
-            const percent = Math.round(
-              (progressEvent.loaded * 100) /
-              progressEvent.total
-            );
-
-            setProgress(percent);
-          },
-        }
-      );
+      await axios.post("http://localhost:5000/upload", formData, {
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(percent);
+        },
+      });
 
       toast.success("Upload Successful");
 
+      setFile(null);
       setProgress(0);
-
       setLoading(false);
-
     } catch (error) {
-
-      console.log(error);
-
+      console.log(error.response || error);
       toast.error("Upload Failed");
-
       setLoading(false);
-
     }
-
   };
 
   return (
     <div className="card">
-
-      <h2 className="upload-title">
-        Upload Documents
-      </h2>
+      <h2 className="upload-title">Upload Documents</h2>
 
       <p className="upload-subtitle">
-        Upload company PDF files and track
-        processing status in real time.
+        Upload company PDF files and track processing status in real time.
       </p>
 
       <div className="file-box">
-
         <p>Select PDF File</p>
 
         <input
@@ -84,6 +59,11 @@ function UploadBox() {
           onChange={(e) => setFile(e.target.files[0])}
         />
 
+        {file && (
+          <p style={{ marginTop: "14px", color: "#2563eb", fontWeight: "600" }}>
+            {file.name}
+          </p>
+        )}
       </div>
 
       <button
@@ -95,28 +75,18 @@ function UploadBox() {
       </button>
 
       <div className="progress-wrapper">
-
         <div className="progress-top">
-
           <span>Upload Progress</span>
-
           <span>{progress}%</span>
-
         </div>
 
         <div className="progress-bar-bg">
-
           <div
             className="progress-bar-fill"
-            style={{
-              width: `${progress}%`,
-            }}
+            style={{ width: `${progress}%` }}
           ></div>
-
         </div>
-
       </div>
-
     </div>
   );
 }
