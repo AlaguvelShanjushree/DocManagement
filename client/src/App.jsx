@@ -36,23 +36,23 @@
 import Navbar from "./components/Navbar";
 import UploadBox from "./components/UploadBox";
 import DocumentTable from "./components/DocumentTable";
+import "./index.css";
 
 function App() {
 
   return (
-    <div
-      style={{
-        background: "#f4f7fb",
-        minHeight: "100vh",
-        padding: "20px",
-        fontFamily: "sans-serif",
-      }}
-    >
+    <div className="container">
+
       <Navbar />
 
-      <UploadBox />
+      <div className="dashboard-grid">
 
-      <DocumentTable />
+        <UploadBox />
+
+        <DocumentTable />
+
+      </div>
+
     </div>
   );
 }

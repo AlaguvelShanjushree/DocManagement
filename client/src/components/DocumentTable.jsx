@@ -28,41 +28,73 @@ function DocumentTable() {
   }, []);
 
   return (
-    <div
-      style={{
-        background: "white",
-        padding: "20px",
-        borderRadius: "10px",
-      }}
-    >
+    <div className="card">
 
-      <h3>Uploaded Documents</h3>
+      <div className="table-header">
+        <h2>Uploaded Files</h2>
+        <span>{documents.length} Documents</span>
+      </div>
 
-      <table
-        width="100%"
-        cellPadding="10"
-      >
-        <thead>
-          <tr>
-            <th align="left">File Name</th>
-            <th align="left">Status</th>
-          </tr>
-        </thead>
+      <div className="table-container">
 
-        <tbody>
+        <table className="doc-table">
 
-          {documents.map((doc) => (
-            <tr key={doc.id}>
-              <td>{doc.filename}</td>
-              <td>
-                {doc.status}
-              </td>
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Status</th>
+              <th>Size</th>
             </tr>
-          ))}
+          </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            {documents.length > 0 ? (
+
+              documents.map((doc) => (
+
+                <tr key={doc.id}>
+
+                  <td>{doc.filename}</td>
+
+                  <td>
+                    <span
+                      className={
+                        doc.status === "Completed"
+                        ? "status completed"
+                        : "status processing"
+                      }
+                    >
+                      {doc.status}
+                    </span>
+                  </td>
+
+                  <td>
+                    {(doc.filesize / 1024).toFixed(2)} KB
+                  </td>
+
+                </tr>
+
+              ))
+
+            ) : (
+
+              <tr>
+                <td
+                  colSpan="3"
+                  className="empty-state"
+                >
+                  No documents uploaded yet
+                </td>
+              </tr>
+
+            )}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
   );

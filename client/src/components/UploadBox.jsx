@@ -4,13 +4,12 @@ import axios from "axios";
 function UploadBox() {
 
   const [file, setFile] = useState(null);
-
   const [progress, setProgress] = useState(0);
 
   const uploadFile = async () => {
 
     if (!file) {
-      alert("Select PDF");
+      alert("Select PDF File");
       return;
     }
 
@@ -41,58 +40,39 @@ function UploadBox() {
       setProgress(0);
 
     } catch (error) {
-
       console.log(error);
-
     }
 
   };
 
   return (
-    <div
-      style={{
-        background: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        marginBottom: "20px",
-      }}
-    >
+    <div className="upload-card">
+
+      <h2 className="upload-title">
+        Upload Company Documents
+      </h2>
 
       <input
+        className="file-input"
         type="file"
         accept=".pdf"
         onChange={(e) => setFile(e.target.files[0])}
       />
 
+      <br />
+
       <button
+        className="upload-btn"
         onClick={uploadFile}
-        style={{
-          marginLeft: "10px",
-          background: "#2563eb",
-          color: "white",
-          border: "none",
-          padding: "10px 15px",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
       >
-        Upload
+        Upload PDF
       </button>
 
-      <div
-        style={{
-          marginTop: "15px",
-          background: "#ddd",
-          height: "10px",
-          borderRadius: "10px",
-        }}
-      >
+      <div className="progress-container">
         <div
+          className="progress-bar"
           style={{
             width: `${progress}%`,
-            background: "#2563eb",
-            height: "10px",
-            borderRadius: "10px",
           }}
         ></div>
       </div>
